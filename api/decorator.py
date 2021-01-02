@@ -26,6 +26,7 @@ def inventory_check(func):
             messages.error(request, '貨源不足')
             return redirect('index')
         
+        product.sales += int(count)
         product.stock_pcs -= int(count)
         product.save()
         return func(request, *args, **kwargs)
@@ -33,7 +34,7 @@ def inventory_check(func):
 
 
 def delete_order(func):
-    
+
     @transaction.atomic
     def wrapper(request, *args, **kwargs):
         order_id = request.POST.get('order_id', None)
@@ -56,6 +57,8 @@ def delete_order(func):
 
         if product.stock_pcs == 0:
             messages.info(request, '商品到貨')
+
+        product.sales -= int(order.qty)
         product.stock_pcs += order.qty
         product.save()
         return func(request, *args, **kwargs)
