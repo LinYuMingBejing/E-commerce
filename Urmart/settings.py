@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'cart',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'HOST': 'mysql',
         'PORT': '3306', 
     }
 }

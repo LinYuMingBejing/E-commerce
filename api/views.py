@@ -15,7 +15,7 @@ class IndexView(View):
         orders = Order.objects.filter(is_delete=False)
         return render(
             request, 
-            'index.html', 
+            'base.html', 
             {
                 'products': products, 'orders': orders
             }
@@ -25,8 +25,8 @@ class IndexView(View):
 class OrderCommitView(View):
     """訂單查詢"""
 
-    @method_decorator(inventory_check)
     @method_decorator(authentication)
+    @method_decorator(inventory_check)
     def post(self, request):
         count = request.POST.get('quantity')
         product_id = request.POST.get('product_id')
@@ -44,11 +44,12 @@ class OrderCommitView(View):
             messages.error(request, '商店不存在')
             return redirect('index')
 
-        Order.objects.create(product = product, 
+        order = Order.objects.create(product = product, 
                             customer_id=customer_id, 
                             qty = int(count),
                             price = int(count) * product.price, 
                             shop = shop)
+        order.save()
         messages.info(request, '訂單創建成功')
         return redirect('index')
 
