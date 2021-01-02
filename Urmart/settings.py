@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'Urmart.wsgi.application'
 DATABASES = {
     'default': {        
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'cart',
         'USER': 'root',
-        'PASSWORD': 'a828215369',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306', 
     }
@@ -126,6 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 # Celery
 BROKER_URL = 'redis://localhost:6379/0'
@@ -138,6 +139,14 @@ CELERY_TIMEZONE = 'Asia/Taipei'
 CELERYBEAT_SCHEDULE = {
     'daily_adsense_checking': {
         'task': 'Urmart.tasks.profit',
-        'schedule': crontab(minute=1)
+        'schedule': crontab(minute=0, hour=0)
     },
 }
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '<your_gmail>'
+EMAIL_HOST_PASSWORD = '<your_password>'

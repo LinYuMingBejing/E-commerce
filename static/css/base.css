@@ -1,3 +1,50 @@
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    border-color: #C0C0C0;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+
 .outer-container {
+    width: 70%;
+    margin: 0 auto;
+}
+.container{
+    display:flex;
+}
+    ​
+.item-right, .item-center, .item-left{
+    flex:1;
+}
+.item-right, .item-center{
+    margin-left: 3%;
+}
+
+.title{
+    margin-bottom: 2%;
+}
+.table{
+    text-align: center;
+}
+.btn-oval {
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-color: #C0C0C0;
+    border-radius: 30px;
+}
+.container-left{
+    margin-top: 2%;
+    display:flex;
+}
+.form-select{
+    width: 90%;
+    height: 80%;
+}
+.mb-3{
+    margin-left: -5%;
     width: 70%;
 }
