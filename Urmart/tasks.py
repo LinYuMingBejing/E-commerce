@@ -13,7 +13,7 @@ CSV_HEADER = ['shop_id', 'qty', 'price', 'total']
 ATTACHMENT_NAME = f'{(datetime.now() - timedelta(days=1)).strftime("%Y%m%d")}銷售報告.csv'
 
 
-def send():
+def sendMail():
     subject = ATTACHMENT_NAME
     message = '請查收，謝謝。如有任何問題，歡迎聯繫！'
     
@@ -27,7 +27,7 @@ def send():
 
 @app.task(ignore_result=True)
 def report():
-    orders = Order.objects.filter(is_delete=False)\
+    orders = Order.objects.filter(is_delete=False, created_time__gte=datetime.now() - timedelta(days=1))\
                         .values('shop_id')\
                         .annotate(qty=Sum('qty'), price=Sum('price'), total=Count('shop_id'))\
                         .all()
@@ -40,5 +40,5 @@ def report():
         for order in orders:
             order['shop_id'] = Shop.objects.get(id=order['shop_id']).name
             f_csv.writerow(order)
-    send()
+    sendMail()
 
