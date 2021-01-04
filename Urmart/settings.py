@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '+-3&9v!-9y*xvs_$c0)_k2(@_tt46hd^$f0w(o(=!-$*!qn*u8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -138,7 +138,7 @@ CELERY_TIMEZONE = 'Asia/Taipei'
 
 CELERYBEAT_SCHEDULE = {
     'daily_adsense_checking': {
-        'task': 'Urmart.tasks.profit',
+        'task': 'Urmart.tasks.report',
         'schedule': crontab(minute=0, hour=0)
     },
 }
