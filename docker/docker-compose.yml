@@ -1,4 +1,4 @@
-version: "3"
+version: "2.1"
 services:
     redis:
         hostname: redis
@@ -21,6 +21,11 @@ services:
         - MYSQL_USER=root
         - MYSQL_PASSWORD=root
         - MYSQL_ROOT_PASSWORD=root
+      healthcheck:
+        test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+        interval: 2s
+        timeout: 30s
+        retries: 5
       restart: always
 
     django:
@@ -30,14 +35,15 @@ services:
           dockerfile: Dockerfile
         volumes:
           - "../:/usr/src/app"
-
-        command: supervisord -n
+        depends_on:
+          mysql:
+            condition: service_healthy
+        command: bash -c "python manage.py makemigrations && python manage.py migrate && supervisord -n"
         ports:
             - "8700:8700"
+            - "5001:5001"
         sysctls:
             - net.core.somaxconn=65535
-        depends_on:
-            - mysql 
 
     nginx:
       image: nginx:1.19.5-alpine
