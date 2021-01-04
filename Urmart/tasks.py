@@ -2,12 +2,14 @@ from django.db.models import Count, Sum
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.conf import settings
 
-from datetime import datetime, timedelta
 import csv
-import os
+from datetime import datetime, timedelta
+
+from .factory import create_app
+
+app = create_app()
 
 from api.models import Order, Shop
-from Urmart.celery import app
 
 CSV_HEADER = ['shop_id', 'qty', 'price', 'total']
 ATTACHMENT_NAME = f'{(datetime.now() - timedelta(days=1)).strftime("%Y%m%d")}銷售報告.csv'
