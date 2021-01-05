@@ -7,6 +7,7 @@
 * Database: Redis, MySQL
 * Cronjob: Celery
 
+#### Web Url:  http://127.0.0.1/index/
 ![pages](https://img.onl/a1QWMG)
 
 #### Deploy Applications:
